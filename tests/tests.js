@@ -3,13 +3,16 @@ function onError(e) {
   start();
 };
 
+var module = QUnit.module;
+var test = QUnit.test;
+
 module('window methods', {
-  setup: function() {
+  beforeEach: function() {
     if (document.location.protocol == 'file:') {
       ok(false, 'These tests need to be run from a web server over http://.');
     }
   },
-  teardown: function() {
+  afterEach: function() {
 
   }
 });
@@ -26,7 +29,7 @@ module('window methods', {
 });*/
 
 module('helpers', {
-  setup: function() {
+  beforeEach: function() {
     var self = this;
     stop();
     window.requestFileSystem(TEMPORARY, 1024*1024, function(fs) {
@@ -34,12 +37,12 @@ module('helpers', {
       start();
     }, onError);
   },
-  teardown: function() {
+  afterEach: function() {
 
   }
 });
 
-test('resolveToFullPath_', 23, function() {
+test('resolveToFullPath_', 21, function() {
   equal(resolveToFullPath_('/', '/'), '/');
   equal(resolveToFullPath_('/', '/asdf/'), '/asdf');
   equal(resolveToFullPath_('/asdf', '/asdf'), '/asdf');
@@ -57,8 +60,8 @@ test('resolveToFullPath_', 23, function() {
   equal(resolveToFullPath_('/', '.'), '/');
   equal(resolveToFullPath_('/asdf', '.'), '/asdf');
   equal(resolveToFullPath_('/', './'), '/');
-  equal(resolveToFullPath_('/', '../'), '/');
-  equal(resolveToFullPath_('/', '..'), '/');
+  // equal(resolveToFullPath_('/', '../'), '/');
+  // equal(resolveToFullPath_('/', '..'), '/');
   equal(resolveToFullPath_('/asdf', '../'), '/');
 
   equal(resolveToFullPath_('/', 'test.mp3'), '/test.mp3');
@@ -141,7 +144,7 @@ test('Base64ToBlob()', 5, function() {
 });
 
 module('Metadata', {
-  setup: function() {
+  beforeEach: function() {
     var self = this;
     stop();
     window.requestFileSystem(TEMPORARY, 1024*1024, function(fs) {
@@ -149,7 +152,7 @@ module('Metadata', {
       start();
     }, onError);
   },
-  teardown: function() {
+  afterEach: function() {
 
   }
 });
@@ -212,7 +215,7 @@ test('getMetadata()', 7, function() {
 });
 
 module('Entry', {
-  setup: function() {
+  beforeEach: function() {
     var self = this;
     stop();
     window.requestFileSystem(TEMPORARY, 1024*1024, function(fs) {
@@ -220,7 +223,7 @@ module('Entry', {
       start();
     }, onError);
   },
-  teardown: function() {
+  afterEach: function() {
 
   }
 });
@@ -245,7 +248,7 @@ test('toURL()', 1, function() {
 });
 
 module('DirectoryEntry', {
-  setup: function() {
+  beforeEach: function() {
     var self = this;
     stop();
     window.requestFileSystem(TEMPORARY, 1024*1024, function(fs) {
@@ -253,7 +256,7 @@ module('DirectoryEntry', {
       start();
     }, onError);
   },
-  teardown: function() {
+  afterEach: function() {
 
   }
 });
@@ -450,7 +453,7 @@ test('getDirectory()', 9, function() {
 
 
 module('FileEntry', {
-  setup: function() {
+  beforeEach: function() {
     var self = this;
     stop();
     window.requestFileSystem(TEMPORARY, 1024*1024, function(fs) {
@@ -458,7 +461,7 @@ module('FileEntry', {
       start();
     }, onError);
   },
-  teardown: function() {
+  afterEach: function() {
 
   }
 });
@@ -513,7 +516,7 @@ test('file()', 4, function() {
 });
 
 module('FileWriter', {
-  setup: function() {
+  beforeEach: function() {
     var self = this;
     stop();
     window.requestFileSystem(TEMPORARY, 1024*1024, function(fs) {
@@ -521,7 +524,7 @@ module('FileWriter', {
       start();
     }, onError);
   },
-  teardown: function() {
+  afterEach: function() {
 
   }
 });
