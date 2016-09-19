@@ -1,11 +1,14 @@
 zip.workerScriptsPath = "js/zip/";
 
+/**
+ * @param {String} e
+ */
 function reportError(e) {
   console.error(e);
 }
 
 /**
- * @param {FileSystemDirectoryReader} root
+ * @param {FileSystemDirectoryReader} fileReader
  * @param {Function} resolve
  */
 function getAllFiles(fileReader, resolve) {
@@ -65,8 +68,13 @@ function addFiles(zipWriter, fileEntries, resolve) {
   }, reportError);
 }
 
+/**
+ * @param {FileSystemDirectoryEntry} root
+ * @param {Function} resolve
+ */
 function createZip(root, resolve) {
-  getAllFiles(root, function(files) {
+  var reader = root.createReader();
+  getAllFiles(reader, function(files) {
     zip.createWriter(new zip.BlobWriter(), function(writer) {
       addFiles(writer, files, function() {
         writer.close(function(blob) {
@@ -77,6 +85,11 @@ function createZip(root, resolve) {
   });
 }
 
+/**
+ * @param {Blob} blob - zip file contents
+ * @param {FileDirectoryEntry} root - directory into which to extract
+ * @param {Function} resolve
+ */
 function expandZip(blob, root, resolve) {
   zip.createReader(new zip.BlobReader(blob), function(reader) {
     reader.getEntries(function(entries) {
