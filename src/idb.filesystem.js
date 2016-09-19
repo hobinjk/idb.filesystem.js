@@ -40,7 +40,7 @@ if (!indexedDB) {
   return;
 }
 
-let IDB_SUPPORTS_BLOB = true;
+let IDB_SUPPORTS_BLOB = false;
 
 // Check to see if IndexedDB support blobs
 const support = function() {
