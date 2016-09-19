@@ -12,7 +12,6 @@ function reportError(e) {
  * @param {Function} resolve
  */
 function getAllFiles(fileReader, resolve) {
-  console.log('getAllFiles', fileReader);
   var allFiles = [];
   var pendingDirectories = 0;
 
@@ -60,7 +59,6 @@ function addFiles(zipWriter, fileEntries, resolve) {
   }
   var fileEntry = fileEntries.pop();
 
-  console.log(fileEntry);
   fileEntry.file(function(file) {
     zipWriter.add(fileEntry.fullPath, new zip.BlobReader(file), function() {
       addFiles(zipWriter, fileEntries, resolve);
@@ -93,7 +91,6 @@ function createZip(root, resolve) {
 function expandZip(blob, root, resolve) {
   zip.createReader(new zip.BlobReader(blob), function(reader) {
     reader.getEntries(function(entries) {
-      console.log(entries);
       entries.forEach(function(zipEntry) {
         root.getFile(zipEntry.filename, {create: true}, function(fileEntry) {
           fileEntry.createWriter(function(fileWriter) {
